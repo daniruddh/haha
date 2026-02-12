@@ -1,9 +1,9 @@
 version: api/v1
 kind: BPPipeline
 metadata:
-  name: Pipeline-generator-testing-app-canary-release-pipeline-v2
+  name: pipeline-generator-testing-app-rollout-release-pipeline-v2
 spec:
-  application: Pipeline-generator-testing-app
+  application: pipeline-generator-testing-app
   retention_execution_count: 10
   version: v2
   runtime_execution: release_package
@@ -74,7 +74,7 @@ spec:
         task_type: JIRA_INTEGRATION
         components: []
         docker_cache: true
-        application_job_template: Pipeline-generator-testing-app-v2
+        application_job_template: pipeline-generator-testing-app-v2
         artifact_source: TAG
   # Create JIRA Ticket Stage
   - questionnaires: []
@@ -116,7 +116,7 @@ spec:
         task_type: ATTACH_DOCUMENTS
         components: []
         project_env: null
-        application_job_template: Pipeline-generator-testing-app-v2
+        application_job_template: pipeline-generator-testing-app-v2
         docker_cache: true
         artifact_source: TAG
         # Create JIRA Ticket Stage Job 1 (Create JIRA Ticket)
@@ -164,7 +164,7 @@ spec:
         release_ticket_flag: false
         task_type: JIRA_INTEGRATION
         components: []
-        application_job_template: Pipeline-generator-testing-app-v2
+        application_job_template: pipeline-generator-testing-app-v2
         docker_cache: true
         artifact_source: TAG
         # Create JIRA Ticket Stage Job 1 (Upload release package notes to created JIRA ticket above)
@@ -194,7 +194,7 @@ spec:
         file_path: null
         task_type: ATTACH_DOCUMENTS
         components: []
-        application_job_template: Pipeline-generator-testing-app-v2
+        application_job_template: pipeline-generator-testing-app-v2
         docker_cache: true
         artifact_source: TAG
   - questionnaires: []
@@ -264,7 +264,7 @@ spec:
         task_type: JIRA_INTEGRATION
         components: []
         project_env: null
-        application_job_template: Pipeline-generator-testing-app-v2
+        application_job_template: pipeline-generator-testing-app-v2
         docker_cache: true
         artifact_source: TAG
   - questionnaires:
@@ -317,12 +317,12 @@ spec:
         task_type: BUILD
         services:
 
-            - DEMO-SERVICE
+            - demo-service
 
-            - LOGGING-SERVICE
+            - logging-service
 
         application_env: impl-dev
-        application_job_template: Pipeline-generator-testing-app-v2
+        application_job_template: pipeline-generator-testing-app-v2
         docker_cache: true
         # Build CI Stage Job 2 (Update JIRA ticket status to IN-Progress if Build is successful)
       - name: job_2
@@ -372,7 +372,7 @@ spec:
         task_type: JIRA_INTEGRATION
         components: []
         project_env: null
-        application_job_template: Pipeline-generator-testing-app-v2
+        application_job_template: pipeline-generator-testing-app-v2
         docker_cache: true
         artifact_source: TAG
   # Create SNOW Ticket Stage
@@ -426,7 +426,7 @@ spec:
         assignment_groups: null
         task_type: SNOW_INTEGRATION
         components: []
-        application_job_template: Pipeline-generator-testing-app-v2
+        application_job_template: pipeline-generator-testing-app-v2
         docker_cache: true
         artifact_source: TAG
         # Create SNOW Ticket Stage Job 2
@@ -461,7 +461,7 @@ spec:
         task_type: ATTACH_DOCUMENTS
         components: []
         project_env: null
-        application_job_template: Pipeline-generator-testing-app-v2
+        application_job_template: pipeline-generator-testing-app-v2
         docker_cache: true
         artifact_source: TAG
         # Create SNOW Ticket Stage Job 3
@@ -492,7 +492,7 @@ spec:
         task_type: ATTACH_DOCUMENTS
         components: []
         project_env: null
-        application_job_template: Pipeline-generator-testing-app-v2
+        application_job_template: pipeline-generator-testing-app-v2
         docker_cache: true
         artifact_source: TAG
 # SNOW Ticket Transition Stage Start Questioner
@@ -627,7 +627,7 @@ spec:
       - question: Change Owner (e.g. USER NAME(OLMID)
         type: text
         possible_value: null
-        default_value: ''
+        default_value: 'a1fmhown'
         jira_update: false
         snow_update: true
         job_template: null
@@ -932,7 +932,7 @@ spec:
         issue_key: null
         work_note: null
         assignment_groups: null
-        application_job_template: Pipeline-generator-testing-app-v2
+        application_job_template: pipeline-generator-testing-app-v2
         task_type: SNOW_INTEGRATION
         components: []
         project_env: null
@@ -991,7 +991,7 @@ spec:
         issue_key: null
         work_note: null
         assignment_groups: null
-        application_job_template: Pipeline-generator-testing-app-v2
+        application_job_template: pipeline-generator-testing-app-v2
         task_type: SNOW_INTEGRATION
         components: []
         project_env: null
@@ -1050,7 +1050,7 @@ spec:
         issue_key: null
         work_note: null
         assignment_groups: null
-        application_job_template: Pipeline-generator-testing-app-v2
+        application_job_template: pipeline-generator-testing-app-v2
         task_type: SNOW_INTEGRATION
         components: []
         docker_cache: true
@@ -1111,13 +1111,13 @@ spec:
         task_type: SNOW_INTEGRATION
         components: []
         project_env: null
-        application_job_template: Pipeline-generator-testing-app-v2
+        application_job_template: pipeline-generator-testing-app-v2
         docker_cache: true
         artifact_source: TAG
         # SNOW Ticket Implement-SNOW-Ticket Stage End
-  # Canary Deployment 20%
+  # Rollout Deployment
   - questionnaires: []
-    name: Deployment 20% Canary
+    name: Rollout Deployment
     approval: false
     send_mail: TRUE
     approve_user: []
@@ -1129,7 +1129,7 @@ spec:
     continue_on_disapproval: false
     approval_questions: false
     tasks:
-    # Canary Deployment 20% Stage Job 1
+    # Rollout Deployment Stage Job 1
       - name: job_1
         order: 1
         job_code: null
@@ -1144,381 +1144,27 @@ spec:
         template_version: null
         dynamic_fields: []
         deployment_status_check: false
-        deployment_type: CANARY
+        deployment_type: ROLLING_UPDATE
         tag: generated
         task_type: DEPLOY
-        pod_shift_percentage: 20
         services:
 
-            - DEMO-SERVICE
+            - demo-service
 
-            - LOGGING-SERVICE
+            - logging-service
 
         application_env: impl-dev
-        application_job_template: Pipeline-generator-testing-app-v2
+        application_job_template: pipeline-generator-testing-app-v2
         docker_cache: true
         artifact_source: GENERATED
-        # Canary Deployment 20% Stage Job 2
-      - name: job_2
-        order: 2
-        job_code: null
-        on_failure_exit: true
-        on_success_exit: false
-        skip_task: false
-        mark_success_upon_skip: false
-        task_run_condition: null
-        environment_variables: {}
-        is_input_variable_mapped: false
-        output_variable_mapping: null
-        template_version: null
-        dynamic_fields: []
-        deployment_status_check: false
-        deployment_type: CANARY
-        tag: generated
-        task_type: DEPLOY
-        pod_shift_percentage: 20
-        services:
-
-            - DEMO-SERVICE
-
-            - LOGGING-SERVICE
-
-        application_env: impl-dev
-        application_job_template: Pipeline-generator-testing-app-v2
-        docker_cache: true
-        artifact_source: GENERATED
-        # Canary Deployment 20% Stage Job 3
-      - name: job_3
-        order: 3
-        job_code: null
-        on_failure_exit: true
-        on_success_exit: false
-        skip_task: false
-        mark_success_upon_skip: false
-        task_run_condition: null
-        environment_variables: {}
-        is_input_variable_mapped: false
-        output_variable_mapping: null
-        template_version: null
-        dynamic_fields: []
-        warmup_delay_duration: 1
-        analysis_interval: 1
-        canary_analysis_duration: 10
-        pass_on_critical_failure: false
-        query_json: {}
-        # deployment_type: CANARY
-        task_type: CANARY_ANALYSIS
-        services:
-
-            - DEMO-SERVICE
-
-            - LOGGING-SERVICE
-
-        canary_analysis_template: 1
-        application_env: impl-dev
-        application_job_template: Pipeline-generator-testing-app-v2
-        docker_cache: true
-  # Canary Deployment 40%
-  - questionnaires: []
-    name: Deployment 40% Canary
-    approval: false
-    send_mail: TRUE
-    approve_user: []
-    order: 11
-    jira_issue_reference: null
-    snow_issue_reference: null
-    continue_on_disapproval: false
-    approval_questions: false
-    tasks:
-      - name: job_1
-        order: 1
-        job_code: null
-        on_failure_exit: true
-        on_success_exit: false
-        skip_task: false
-        mark_success_upon_skip: false
-        task_run_condition: null
-        environment_variables: {}
-        is_input_variable_mapped: false
-        output_variable_mapping: null
-        template_version: null
-        dynamic_fields: []
-        deployment_status_check: false
-        deployment_type: CANARY
-        tag: generated
-        task_type: DEPLOY
-        pod_shift_percentage: 40
-        services:
-
-            - DEMO-SERVICE
-
-            - LOGGING-SERVICE
-
-        application_env: impl-dev
-        application_job_template: Pipeline-generator-testing-app-v2
-        docker_cache: true
-        artifact_source: GENERATED
-      - name: job_2
-        order: 2
-        job_code: null
-        on_failure_exit: true
-        on_success_exit: false
-        skip_task: false
-        mark_success_upon_skip: false
-        task_run_condition: null
-        environment_variables: {}
-        is_input_variable_mapped: false
-        output_variable_mapping: null
-        template_version: null
-        dynamic_fields: []
-        deployment_status_check: false
-        deployment_type: CANARY
-        tag: generated
-        task_type: DEPLOY
-        pod_shift_percentage: 40
-        services:
-
-            - DEMO-SERVICE
-
-            - LOGGING-SERVICE
-
-        application_env: impl-dev
-        application_job_template: Pipeline-generator-testing-app-v2
-        docker_cache: true
-        artifact_source: GENERATED
-      - name: job_3
-        order: 3
-        job_code: null
-        on_failure_exit: true
-        on_success_exit: false
-        skip_task: false
-        mark_success_upon_skip: false
-        task_run_condition: null
-        environment_variables: {}
-        is_input_variable_mapped: false
-        output_variable_mapping: null
-        template_version: null
-        dynamic_fields: []
-        warmup_delay_duration: 1
-        analysis_interval: 1
-        canary_analysis_duration: 10
-        pass_on_critical_failure: false
-        query_json: {}
-        # deployment_type: CANARY
-        task_type: CANARY_ANALYSIS
-        services:
-
-            - DEMO-SERVICE
-
-            - LOGGING-SERVICE
-
-        canary_analysis_template: 1
-        application_env: impl-dev
-        application_job_template: Pipeline-generator-testing-app-v2
-        docker_cache: true
-  # Canary Deployment 60%
-  - questionnaires: []
-    name: Deployment 60% Canary
-    approval: false
-    send_mail: TRUE
-    approve_user: []
-    order: 12
-    jira_issue_reference: null
-    snow_issue_reference: null
-    continue_on_disapproval: false
-    approval_questions: false
-    tasks:
-      - name: job_1
-        order: 1
-        job_code: null
-        on_failure_exit: true
-        on_success_exit: false
-        skip_task: false
-        mark_success_upon_skip: false
-        task_run_condition: null
-        environment_variables: {}
-        is_input_variable_mapped: false
-        output_variable_mapping: null
-        template_version: null
-        dynamic_fields: []
-        deployment_status_check: false
-        deployment_type: CANARY
-        tag: generated
-        task_type: DEPLOY
-        pod_shift_percentage: 60
-        services:
-
-            - DEMO-SERVICE
-
-            - LOGGING-SERVICE
-
-        application_env: impl-dev
-        application_job_template: Pipeline-generator-testing-app-v2
-        docker_cache: true
-        artifact_source: GENERATED
-      - name: job_2
-        order: 2
-        job_code: null
-        on_failure_exit: true
-        on_success_exit: false
-        skip_task: false
-        mark_success_upon_skip: false
-        task_run_condition: null
-        environment_variables: {}
-        is_input_variable_mapped: false
-        output_variable_mapping: null
-        template_version: null
-        dynamic_fields: []
-        deployment_status_check: false
-        deployment_type: CANARY
-        tag: generated
-        task_type: DEPLOY
-        pod_shift_percentage: 60
-        services:
-
-            - DEMO-SERVICE
-
-            - LOGGING-SERVICE
-
-        application_env: impl-dev
-        application_job_template: Pipeline-generator-testing-app-v2
-        docker_cache: true
-        artifact_source: GENERATED
-      - name: job_3
-        order: 3
-        job_code: null
-        on_failure_exit: true
-        on_success_exit: false
-        skip_task: false
-        mark_success_upon_skip: false
-        task_run_condition: null
-        environment_variables: {}
-        is_input_variable_mapped: false
-        output_variable_mapping: null
-        template_version: null
-        dynamic_fields: []
-        warmup_delay_duration: 1
-        analysis_interval: 1
-        canary_analysis_duration: 10
-        pass_on_critical_failure: false
-        query_json: {}
-        # deployment_type: CANARY
-        task_type: CANARY_ANALYSIS
-        services:
-
-            - DEMO-SERVICE
-
-            - LOGGING-SERVICE
-
-        canary_analysis_template: 1
-        application_env: impl-dev
-        application_job_template: Pipeline-generator-testing-app-v2
-        docker_cache: true
-  # Canary Deployment 100%
-  - questionnaires: []
-    name: Deployment 100% Canary
-    approval: false
-    send_mail: TRUE
-    approve_user: []
-    order: 13
-    jira_issue_reference: null
-    snow_issue_reference: null
-    continue_on_disapproval: false
-    approval_questions: false
-    tasks:
-      - name: job_1
-        order: 1
-        job_code: null
-        on_failure_exit: true
-        on_success_exit: false
-        skip_task: false
-        mark_success_upon_skip: false
-        task_run_condition: null
-        environment_variables: {}
-        is_input_variable_mapped: false
-        output_variable_mapping: null
-        template_version: null
-        dynamic_fields: []
-        deployment_status_check: false
-        deployment_type: CANARY
-        tag: generated
-        task_type: DEPLOY
-        pod_shift_percentage: 100
-        services:
-
-            - DEMO-SERVICE
-
-            - LOGGING-SERVICE
-
-        application_env: impl-dev
-        application_job_template: Pipeline-generator-testing-app-v2
-        docker_cache: true
-        artifact_source: GENERATED
-      - name: job_2
-        order: 2
-        job_code: null
-        on_failure_exit: true
-        on_success_exit: false
-        skip_task: false
-        mark_success_upon_skip: false
-        task_run_condition: null
-        environment_variables: {}
-        is_input_variable_mapped: false
-        output_variable_mapping: null
-        template_version: null
-        dynamic_fields: []
-        deployment_status_check: false
-        deployment_type: CANARY
-        tag: generated
-        task_type: DEPLOY
-        pod_shift_percentage: 100
-        services:
-
-            - DEMO-SERVICE
-
-            - LOGGING-SERVICE
-
-        application_env: impl-dev
-        application_job_template: Pipeline-generator-testing-app-v2
-        docker_cache: true
-        artifact_source: GENERATED
-      - name: job_3
-        order: 3
-        job_code: null
-        on_failure_exit: true
-        on_success_exit: false
-        skip_task: false
-        mark_success_upon_skip: false
-        task_run_condition: null
-        environment_variables: {}
-        is_input_variable_mapped: false
-        output_variable_mapping: null
-        template_version: null
-        dynamic_fields: []
-        warmup_delay_duration: 1
-        analysis_interval: 1
-        canary_analysis_duration: 10
-        pass_on_critical_failure: false
-        query_json: {}
-        # deployment_type: CANARY
-        task_type: CANARY_ANALYSIS
-        services:
-
-            - DEMO-SERVICE
-
-            - LOGGING-SERVICE
-
-        canary_analysis_template: 1
-        application_env: impl-dev
-        application_job_template: Pipeline-generator-testing-app-v2
-        docker_cache: true
+        # Rollout Deployment Stage Job 2
   # SNOW Ticket Transition Stage Start
   - questionnaires: []
     name: Review-SNOW-Ticket
     approval: false
     send_mail: TRUE
     approve_user: []
-    order: 14
+    order: 11
     stage_run_condition:
       stage.Deployment.job.job_1.success: 'true'
     jira_issue_reference: null
@@ -1565,7 +1211,7 @@ spec:
         issue_key: null
         work_note: null
         assignment_groups: null
-        application_job_template: Pipeline-generator-testing-app-v2
+        application_job_template: pipeline-generator-testing-app-v2
         task_type: SNOW_INTEGRATION
         docker_cache: true
         artifact_source: TAG
@@ -1576,7 +1222,7 @@ spec:
     approval: false
     send_mail: TRUE
     approve_user: []
-    order: 15
+    order: 12
     stage_run_condition: {}
     jira_issue_reference: null
     snow_issue_reference: null
@@ -1626,7 +1272,7 @@ spec:
         task_type: SNOW_INTEGRATION
         components: []
         docker_cache: true
-        application_job_template: Pipeline-generator-testing-app-v2
+        application_job_template: pipeline-generator-testing-app-v2
         artifact_source: TAG
       # SNOW Ticket Close Stage Job 2
       - name: job_2
@@ -1668,7 +1314,7 @@ spec:
         issue_key: null
         work_note: null
         assignment_groups: null
-        application_job_template: Pipeline-generator-testing-app-v2
+        application_job_template: pipeline-generator-testing-app-v2
         task_type: SNOW_INTEGRATION
         components: []
         project_env: null
@@ -1680,7 +1326,7 @@ spec:
     approval: false
     send_mail: TRUE
     approve_user: []
-    order: 16
+    order: 13
     stage_run_condition: {}
     jira_issue_reference: null
     snow_issue_reference: null
@@ -1735,7 +1381,7 @@ spec:
         task_type: JIRA_INTEGRATION
         components: []
         project_env: null
-        application_job_template: Pipeline-generator-testing-app-v2
+        application_job_template: pipeline-generator-testing-app-v2
         docker_cache: true
         artifact_source: TAG
       # JIRA Ticket Final Stage Job 2
@@ -1786,6 +1432,6 @@ spec:
         task_type: JIRA_INTEGRATION
         components: []
         project_env: null
-        application_job_template: Pipeline-generator-testing-app-v2
+        application_job_template: pipeline-generator-testing-app-v2
         docker_cache: true
         artifact_source: TAG
