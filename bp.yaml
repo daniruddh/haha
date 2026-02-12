@@ -1214,7 +1214,7 @@ spec:
 
             - LOGGING-SERVICE
 
-        canary_analysis_template: 
+        canary_analysis_template: 1
         application_env: impl-dev
         application_job_template: Pipeline-generator-testing-app-v2
         docker_cache: true
@@ -1312,7 +1312,7 @@ spec:
 
             - LOGGING-SERVICE
 
-        canary_analysis_template: 
+        canary_analysis_template: 1
         application_env: impl-dev
         application_job_template: Pipeline-generator-testing-app-v2
         docker_cache: true
@@ -1410,7 +1410,7 @@ spec:
 
             - LOGGING-SERVICE
 
-        canary_analysis_template: 
+        canary_analysis_template: 1
         application_env: impl-dev
         application_job_template: Pipeline-generator-testing-app-v2
         docker_cache: true
@@ -1508,7 +1508,7 @@ spec:
 
             - LOGGING-SERVICE
 
-        canary_analysis_template: 
+        canary_analysis_template: 1
         application_env: impl-dev
         application_job_template: Pipeline-generator-testing-app-v2
         docker_cache: true
