@@ -1,0 +1,1791 @@
+version: api/v1
+kind: BPPipeline
+metadata:
+  name: Pipeline-generator-testing-app-canary-release-pipeline-v2
+spec:
+  application: Pipeline-generator-testing-app
+  retention_execution_count: 10
+  version: v2
+  runtime_execution: release_package
+  default_run: true
+  pipeline_context_parameters: {}
+  jira_references: []
+  trigger_type: Manual
+  stages:
+  - questionnaires: []
+  # Check Merge Conflicts Stage
+    name: Check-Merge-Conflicts
+    approval: false
+    send_mail: false
+    approve_user: []
+    order: 1
+    stage_run_condition: {}
+    jira_issue_reference: null
+    snow_issue_reference: null
+    continue_on_disapproval: false
+    approval_questions: false
+    tasks:
+    # Check Merge Conflicts Stage Job 1
+      - name: job_1
+        order: 1
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields:
+          jira_issue_list:
+            value: list_of_branches
+            source: release_package_out_put_vars
+        operation: check_conflicts
+        summary: null
+        description: null
+        issuetype: null
+        priority: null
+        account_id: null
+        issue_key: null
+        status: null
+        comment: null
+        epic_name: null
+        issue_name: null
+        set_branch: false
+        additional_field_key_value: []
+        release_name: null
+        jira_status: []
+        selected_jira_users: []
+        comment_validator_type: null
+        comment_validator: null
+        already_comment_validator_type: null
+        already_comment_validator: null
+        jira_issue_list: []
+        already_picked: false
+        destination_branch: main
+        provider: git
+        release_issue_key: null
+        parent_jira_id: null
+        pick_stories_from: release_package
+        ticketing_project: DEMO_JIRA
+        release_ticket_flag: false
+        task_type: JIRA_INTEGRATION
+        components: []
+        docker_cache: true
+        application_job_template: Pipeline-generator-testing-app-v2
+        artifact_source: TAG
+  # Create JIRA Ticket Stage
+  - questionnaires: []
+    name: Create-Jira-Ticket
+    approval: false
+    send_mail: false
+    approve_user: []
+    order: 2
+    stage_run_condition: {}
+    jira_issue_reference: null
+    snow_issue_reference: null
+    continue_on_disapproval: false
+    approval_questions: false
+    tasks:
+    # Create JIRA Ticket Stage Job 1 (download documents from stories selected in release package)
+      - name: job_1
+        order: 1
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields:
+          issue_list:
+            value: list_of_stories
+            source: release_package_out_put_vars
+        attach_operation: download_documents
+        integration_id: 123
+        integration_type: jira
+        integration_project: DEMO_PROJECT
+        issue_list: null
+        file_names: []
+        file_path: null
+        task_type: ATTACH_DOCUMENTS
+        components: []
+        project_env: null
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+        artifact_source: TAG
+        # Create JIRA Ticket Stage Job 1 (Create JIRA Ticket)
+      - name: job_2
+        order: 2
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields: {}
+        operation: create
+        summary: Jira release ticket
+        description: description
+        issuetype: Task
+        priority: major(p2)
+        account_id: null
+        issue_key: stage.Create-Jira-Ticket.job.job_2.jira_id.key.project.DEMO_PROJECT
+        status: null
+        comment: null
+        epic_name: null
+        issue_name: Release
+        set_branch: false
+        additional_field_key_value: []
+        release_name: null
+        jira_status: []
+        selected_jira_users: []
+        comment_validator_type: null
+        comment_validator: null
+        already_comment_validator_type: null
+        already_comment_validator: null
+        jira_issue_list: []
+        already_picked: false
+        destination_branch: null
+        provider: null
+        release_issue_key: null
+        parent_jira_id: null
+        pick_stories_from: null
+        ticketing_project: DEMO_JIRA
+        release_ticket_flag: false
+        task_type: JIRA_INTEGRATION
+        components: []
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+        artifact_source: TAG
+        # Create JIRA Ticket Stage Job 1 (Upload release package notes to created JIRA ticket above)
+      - name: job_3
+        order: 3
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields:
+          issue_key:
+            value: >-
+              stage.Create-Jira-Ticket.task.2.JIRA_INTEGRATION.issue_key.step_order.0
+            source: job_out_put_vars
+        attach_operation: upload_release
+        integration_id: 123
+        integration_type: jira
+        integration_project: DEMO_PROJECT
+        issue_list: null
+        file_names: null
+        file_path: null
+        task_type: ATTACH_DOCUMENTS
+        components: []
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+        artifact_source: TAG
+  - questionnaires: []
+  # Create Pull Request Stage
+    name: Create-PR
+    approval: false
+    send_mail: false
+    approve_user: []
+    order: 3
+    stage_run_condition: {}
+    jira_issue_reference: null
+    snow_issue_reference: null
+    continue_on_disapproval: false
+    approval_questions: false
+    tasks:
+    # Create Pull Request Stage Job 1
+      - name: job_1
+        order: 1
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields:
+          jira_issue_list:
+            value: >-
+              stage.Check-Merge-Conflicts.task.1.JIRA_INTEGRATION.jira_issue_list.step_order.0
+            source: job_out_put_vars
+          release_issue_key:
+            value: >-
+              stage.Create-Jira-Ticket.task.2.JIRA_INTEGRATION.issue_key.step_order.0
+            source: job_out_put_vars
+        operation: create_pr
+        summary: null
+        description: null
+        issuetype: null
+        priority: null
+        account_id: null
+        issue_key: null
+        status: null
+        comment: null
+        epic_name: null
+        issue_name: null
+        set_branch: false
+        additional_field_key_value: []
+        release_name: null
+        jira_status: []
+        selected_jira_users: []
+        comment_validator_type: null
+        comment_validator: null
+        already_comment_validator_type: null
+        already_comment_validator: null
+        jira_issue_list: []
+        already_picked: false
+        destination_branch: main
+        provider: git
+        release_issue_key: null
+        parent_jira_id: null
+        pick_stories_from: null
+        ticketing_project: DEMO_JIRA
+        release_ticket_flag: false
+        task_type: JIRA_INTEGRATION
+        components: []
+        project_env: null
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+        artifact_source: TAG
+  - questionnaires:
+      - question: Does All The Pull Request Merged Successfully?
+        type: text
+        possible_value: null
+        default_value: null
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: null
+        snow_reference: null
+        field_name: ''
+        snow_field_name: ''
+        is_pipeline_context_field: false
+  # Build Stage named CI
+    name: CI
+    approval: true
+    send_mail: true
+    approve_user:
+
+        - name: Aniruddh Dangarh
+          email: aniruddh.dangarh@opstree.com
+          role_master: Super_Admin
+
+    order: 4
+    stage_run_condition: {}
+    jira_issue_reference: stage.Create-Jira-Ticket.job.job_2.jira_id.key.project.DEMO_PROJECT
+    snow_issue_reference: null
+    continue_on_disapproval: false
+    approval_questions: false
+    tasks:
+    # Build CI Stage Job 1 (Build artifact)
+      - name: job_1
+        order: 1
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields: []
+        latest_enable: false
+        no_cache: false
+        task_type: BUILD
+        services:
+
+            - DEMO-SERVICE
+
+            - LOGGING-SERVICE
+
+        application_env: impl-dev
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+        # Build CI Stage Job 2 (Update JIRA ticket status to IN-Progress if Build is successful)
+      - name: job_2
+        order: 2
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition:
+          stage.CI.job.job_1.success: 'true'
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields: {}
+        operation: status_update
+        summary: null
+        description: null
+        issuetype: null
+        priority: null
+        account_id: null
+        issue_key: >-
+          stage.Create-Jira-Ticket.job.job_2.jira_id.key.project.DEMO_PROJECT
+        status: IN PROGRESS
+        comment: null
+        epic_name: null
+        issue_name: null
+        set_branch: false
+        additional_field_key_value: []
+        release_name: null
+        jira_status: []
+        selected_jira_users: []
+        comment_validator_type: null
+        comment_validator: null
+        already_comment_validator_type: null
+        already_comment_validator: null
+        jira_issue_list: []
+        already_picked: false
+        destination_branch: null
+        provider: null
+        release_issue_key: null
+        parent_jira_id: null
+        pick_stories_from: null
+        ticketing_project: null
+        release_ticket_flag: false
+        task_type: JIRA_INTEGRATION
+        components: []
+        project_env: null
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+        artifact_source: TAG
+  # Create SNOW Ticket Stage
+  - questionnaires: []
+    name: Create-SNOW-Ticket
+    approval: false
+    send_mail: false
+    approve_user: []
+    order: 5
+    stage_run_condition:
+      stage.CI.job.job_2.success: 'true'
+    jira_issue_reference: null
+    snow_issue_reference: null
+    continue_on_disapproval: false
+    approval_questions: false
+    tasks:
+      # Create SNOW Ticket Stage Job 1
+      - name: job_1
+        order: 1
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields: {}
+        snow_operation: snow_create
+        snow_description: This ticket is created with release package pipeline
+        short_description: created with release package pipeline
+        snow_ticket_type: normal
+        service: null
+        category: null
+        configuration_items: null
+        implementation_plan: null
+        justification: null
+        risk_impact_analysis: null
+        backout_plan: null
+        test_plan: null
+        start_date: null
+        end_date: null
+        impact: null
+        risk: null
+        snow_priority: null
+        change_state: null
+        issue_key: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        work_note: null
+        assignment_groups: null
+        task_type: SNOW_INTEGRATION
+        components: []
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+        artifact_source: TAG
+        # Create SNOW Ticket Stage Job 2
+      - name: job_2
+        order: 2
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields:
+          file_path:
+            value: >-
+              stage.Create-Jira-Ticket.task.1.ATTACH_DOCUMENTS.file_path.step_order.0
+            source: job_out_put_vars
+          issue_key:
+            value: >-
+              stage.Create-SNOW-Ticket.task.1.SNOW_INTEGRATION.snow_issue_key.step_order.0
+            source: job_out_put_vars
+        attach_operation: upload_documents
+        integration_id: 99
+        integration_type: service_now
+        integration_project: null
+        issue_list: null
+        file_names: []
+        file_path: null
+        task_type: ATTACH_DOCUMENTS
+        components: []
+        project_env: null
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+        artifact_source: TAG
+        # Create SNOW Ticket Stage Job 3
+      - name: job_3
+        order: 3
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields:
+          issue_key:
+            value: >-
+              stage.Create-SNOW-Ticket.task.1.SNOW_INTEGRATION.snow_issue_key.step_order.0
+            source: job_out_put_vars
+        attach_operation: upload_release
+        integration_id: 123
+        integration_type: service_now
+        integration_project: null
+        issue_list: null
+        file_names: null
+        file_path: null
+        task_type: ATTACH_DOCUMENTS
+        components: []
+        project_env: null
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+        artifact_source: TAG
+# SNOW Ticket Transition Stage Start Questioner
+  - questionnaires:
+      - question: Application
+        type: text
+        possible_value: null
+        default_value: 'buildpiper'
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: u_application
+        field_type: ''
+        is_pipeline_context_field: false
+      - question: Classification
+        type: select
+        possible_value: >-
+          Patch Automantion Change Request,APPLICATION,CONFIGURATION
+          Activity,DATABASE Activity,Hardware,Network Activity,New
+          Project,OS,PATCH Activity,PRE-AUTHORIZED,SECURITY Vulnerability,Bug
+          Fix,Issue,New Deployment,Project,Routine,Patching,Performance
+          Tuning,Server Decommission
+        default_value: 'Application'
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: u_classification
+        field_type: option
+        is_pipeline_context_field: false
+      - question: Function
+        type: select
+        possible_value: 'OPS,PROJECT,INFRA'
+        default_value: 'Project'
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: u_function
+        field_type: option
+        is_pipeline_context_field: false
+      - question: High Availability
+        type: select
+        possible_value: 'Yes,No'
+        default_value: null
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: u_high_availability
+        field_type: option
+        is_pipeline_context_field: false
+      - question: Business Functionality and Risk
+        type: select
+        possible_value: 'Acquisition,Experience,Recharge,All,None of these'
+        default_value: 'None of These'
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: u_business_functionality_and_risk
+        field_type: option
+        is_pipeline_context_field: false
+      - question: Database Required
+        type: select
+        possible_value: 'Yes,No'
+        default_value: 'No'
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: u_database
+        field_type: option
+        is_pipeline_context_field: false
+      - question: Requester Competency
+        type: select
+        possible_value: >-
+          Accenture,Airtel,Airtel Network,Airtel Payments Bank,Amdocs,Annik
+          technology pvt Ltd,Botree,Comviva,Cyient Ltd,Diksha
+          Tech,Hoonartek,IBM-AMS,IBM-OPS,IBM-SARM,Kyndryl,NMS
+          Works,Nxtra,Others,Sampark Solutions,Softenger,TCS,Telesonic,Torry
+          Harris,V Link Info,Wipro
+        default_value: 'opstree'
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: u_requester_competency
+        field_type: option
+        is_pipeline_context_field: false
+      - question: Implementer Competency
+        type: select
+        possible_value: >-
+          Accenture,Airtel,Airtel Network,Airtel Payments Bank,Amdocs,Annik
+          technology pvt Ltd,Botree,Comviva,Cyient Ltd,Diksha
+          Tech,Hoonartek,IBM-AMS,IBM-OPS,IBM-SARM,Kyndryl,NMS
+          Works,Nxtra,Others,Sampark Solutions,Softenger,TCS,Telesonic,Torry
+          Harris,V Link Info,Wipro
+        default_value: 'opstree'
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: u_implementer_competency
+        field_type: option
+        is_pipeline_context_field: false
+      - question: Change Owner (e.g. USER NAME(OLMID)
+        type: text
+        possible_value: null
+        default_value: ''
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: u_change_owner
+        field_type: ''
+        is_pipeline_context_field: false
+      - question: DR Applicable
+        type: select
+        possible_value: 'Yes,No'
+        default_value: 'No'
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: u_dr_applicable
+        field_type: option
+        is_pipeline_context_field: false
+      - question: Line of Business
+        type: text
+        possible_value: null
+        default_value: 'intOps'
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: u_line_of_business
+        field_type: ''
+        is_pipeline_context_field: false
+      - question: Description
+        type: text
+        possible_value: null
+        default_value: null
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: description
+        field_type: ''
+        is_pipeline_context_field: false
+      - question: Short description
+        type: text
+        possible_value: null
+        default_value: null
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: short_description
+        field_type: ''
+        is_pipeline_context_field: false
+      - question: End Date
+        type: datetime
+        possible_value: null
+        default_value: null
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: end_date
+        field_type: ''
+        is_pipeline_context_field: false
+      - question: Start Date
+        type: datetime
+        possible_value: null
+        default_value: null
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: start_date
+        field_type: ''
+        is_pipeline_context_field: false
+      - question: Downtime Required
+        type: select
+        possible_value: 'Yes,No'
+        default_value: 'No'
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: u_downtime_required
+        field_type: option
+        is_pipeline_context_field: false
+      - question: Downtime Remarks
+        type: text
+        possible_value: null
+        default_value: 'No downtime'
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: u_downtime_remarks_new
+        field_type: ''
+        is_pipeline_context_field: false
+      - question: As Per Release Calendar
+        type: text
+        possible_value: null
+        default_value: null
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: u_as_per_release_calendar
+        field_type: ''
+        is_pipeline_context_field: false
+      - question: Upstream and Downstream Application
+        type: text
+        possible_value: null
+        default_value: null
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: u_upstream_and_downstream_application
+        field_type: ''
+        is_pipeline_context_field: false
+      - question: Implementation Plan
+        type: text
+        possible_value: null
+        default_value: 'attached'
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: implementation_plan
+        field_type: ''
+        is_pipeline_context_field: false
+      - question: Backout Plan
+        type: text
+        possible_value: null
+        default_value: 'attached'
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: backout_plan
+        field_type: ''
+        is_pipeline_context_field: false
+      - question: Backout Plan
+        type: text
+        possible_value: null
+        default_value: 'attached'
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: backout_plan
+        field_type: ''
+        is_pipeline_context_field: false
+      - question: Risk Impact Analysis
+        type: text
+        possible_value: null
+        default_value: 'attached'
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: risk_impact_analysis
+        field_type: ''
+        is_pipeline_context_field: false
+      - question: Test Plan
+        type: text
+        possible_value: null
+        default_value: 'attached'
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: test_plan
+        field_type: ''
+        is_pipeline_context_field: false
+      - question: Justification
+        type: text
+        possible_value: null
+        default_value: 'attached'
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: justification
+        field_type: ''
+        is_pipeline_context_field: false
+      - question: Requested For Label (e.g. USER NAME(OLMID)
+        type: text
+        possible_value: null
+        default_value: 'Airtel'
+        jira_update: false
+        snow_update: true
+        job_template: null
+        mandatory: false
+        jira_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        snow_reference: stage.Create-SNOW-Ticket.job.job_1.servicenow_id.key
+        field_name: ''
+        snow_field_name: u_requested_for_label
+        field_type: ''
+        is_pipeline_context_field: false
+    # SNOW Ticket Transition Stage
+    name: SNOW-Ticket-Transition
+    approval: true
+    send_mail: true
+    approve_user:
+
+        - name: Aniruddh Dangarh
+          email: aniruddh.dangarh@opstree.com
+          role_master: Super_Admin
+
+    order: 6
+    stage_run_condition: {}
+    jira_issue_reference: null
+    snow_issue_reference: null
+    continue_on_disapproval: false
+    approval_questions: true
+    tasks:
+    # SNOW Ticket Transition Stage Job 1
+      - name: job_1
+        order: 1
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields:
+          issue_key:
+            value: >-
+              stage.Create-SNOW-Ticket.task.1.SNOW_INTEGRATION.snow_issue_key.step_order.0
+            source: job_out_put_vars
+        snow_operation: snow_update
+        snow_description: This ticket is created with release package pipeline
+        short_description: created with release package pipeline
+        snow_ticket_type: normal
+        service: null
+        category: null
+        configuration_items: null
+        implementation_plan: null
+        justification: null
+        risk_impact_analysis: null
+        backout_plan: null
+        test_plan: null
+        start_date: null
+        end_date: null
+        impact: '2'
+        risk: '2'
+        snow_priority: '3'
+        change_state: null
+        issue_key: null
+        work_note: null
+        assignment_groups: null
+        application_job_template: Pipeline-generator-testing-app-v2
+        task_type: SNOW_INTEGRATION
+        components: []
+        project_env: null
+        docker_cache: true
+        artifact_source: TAG
+        # SNOW Ticket Transition Stage End
+  # SNOW Ticket Transition Stage Start
+  - questionnaires: []
+    name: Authorize-SNOW-Ticket
+    approval: false
+    send_mail: false
+    approve_user: []
+    order: 7
+    stage_run_condition: {}
+    jira_issue_reference: null
+    snow_issue_reference: null
+    continue_on_disapproval: false
+    approval_questions: false
+    tasks:
+      # SNOW Ticket Transition Stage Job 1
+      - name: job_1
+        order: 1
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields:
+          issue_key:
+            value: >-
+              stage.Create-SNOW-Ticket.task.1.SNOW_INTEGRATION.snow_issue_key.step_order.0
+            source: job_out_put_vars
+        snow_operation: snow_update_status
+        snow_description: null
+        short_description: null
+        snow_ticket_type: null
+        service: null
+        category: null
+        configuration_items: null
+        implementation_plan: null
+        justification: null
+        risk_impact_analysis: null
+        backout_plan: null
+        test_plan: null
+        start_date: null
+        end_date: null
+        impact: null
+        risk: null
+        snow_priority: null
+        change_state: '-3'
+        issue_key: null
+        work_note: null
+        assignment_groups: null
+        application_job_template: Pipeline-generator-testing-app-v2
+        task_type: SNOW_INTEGRATION
+        components: []
+        project_env: null
+        docker_cache: true
+        artifact_source: TAG
+  # SNOW Ticket Transition Stage End
+  # SNOW Ticket Scheduled-SNOW-Ticket Stage Start
+  - questionnaires: []
+    name: Scheduled-SNOW-Ticket
+    approval: false
+    send_mail: false
+    approve_user: []
+    order: 8
+    stage_run_condition: {}
+    jira_issue_reference: null
+    snow_issue_reference: null
+    continue_on_disapproval: false
+    approval_questions: false
+    tasks:
+    # SNOW Ticket Scheduled-SNOW-Ticket Stage Job 1
+      - name: job_1
+        order: 1
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields:
+          issue_key:
+            value: >-
+              stage.Create-SNOW-Ticket.task.1.SNOW_INTEGRATION.snow_issue_key.step_order.0
+            source: job_out_put_vars
+        snow_operation: snow_update_status
+        snow_description: null
+        short_description: null
+        snow_ticket_type: null
+        service: null
+        category: null
+        configuration_items: null
+        implementation_plan: null
+        justification: null
+        risk_impact_analysis: null
+        backout_plan: null
+        test_plan: null
+        start_date: null
+        end_date: null
+        impact: null
+        risk: null
+        snow_priority: null
+        change_state: '-2'
+        issue_key: null
+        work_note: null
+        assignment_groups: null
+        application_job_template: Pipeline-generator-testing-app-v2
+        task_type: SNOW_INTEGRATION
+        components: []
+        docker_cache: true
+        artifact_source: TAG
+    # SNOW Ticket Scheduled-SNOW-Ticket Stage End
+    # SNOW Ticket Implement-SNOW-Ticket Stage Start
+  - questionnaires: []
+    name: Implement-SNOW-Ticket
+    approval: false
+    send_mail: false
+    approve_user: []
+    order: 9
+    stage_run_condition: {}
+    jira_issue_reference: null
+    snow_issue_reference: null
+    continue_on_disapproval: false
+    approval_questions: false
+    tasks:
+    # SNOW Ticket Implement-SNOW-Ticket Stage Job 1
+      - name: job_1
+        order: 1
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields:
+          issue_key:
+            value: >-
+              stage.Create-SNOW-Ticket.task.1.SNOW_INTEGRATION.snow_issue_key.step_order.0
+            source: job_out_put_vars
+        snow_operation: snow_update_status
+        snow_description: null
+        short_description: null
+        snow_ticket_type: null
+        service: null
+        category: null
+        configuration_items: null
+        implementation_plan: null
+        justification: null
+        risk_impact_analysis: null
+        backout_plan: null
+        test_plan: null
+        start_date: null
+        end_date: null
+        impact: null
+        risk: null
+        snow_priority: null
+        change_state: '-1'
+        issue_key: null
+        work_note: null
+        assignment_groups: null
+        task_type: SNOW_INTEGRATION
+        components: []
+        project_env: null
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+        artifact_source: TAG
+        # SNOW Ticket Implement-SNOW-Ticket Stage End
+  # Canary Deployment 20%
+  - questionnaires: []
+    name: Deployment 20% Canary
+    approval: false
+    send_mail: false
+    approve_user: []
+    order: 10
+    stage_run_condition:
+      stage.Implement-SNOW-Ticket.job.job_1.success: 'true'
+    jira_issue_reference: null
+    snow_issue_reference: null
+    continue_on_disapproval: false
+    approval_questions: false
+    tasks:
+    # Canary Deployment 20% Stage Job 1
+      - name: job_1
+        order: 1
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields: []
+        deployment_status_check: false
+        deployment_type: CANARY
+        tag: generated
+        task_type: DEPLOY
+        pod_shift_percentage: 20
+        services:
+
+            - DEMO-SERVICE
+
+            - LOGGING-SERVICE
+
+        application_env: impl-dev
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+        artifact_source: GENERATED
+        # Canary Deployment 20% Stage Job 2
+      - name: job_2
+        order: 2
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields: []
+        deployment_status_check: false
+        deployment_type: CANARY
+        tag: generated
+        task_type: DEPLOY
+        pod_shift_percentage: 20
+        services:
+
+            - DEMO-SERVICE
+
+            - LOGGING-SERVICE
+
+        application_env: impl-dev
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+        artifact_source: GENERATED
+        # Canary Deployment 20% Stage Job 3
+      - name: job_3
+        order: 3
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields: []
+        warmup_delay_duration: 1
+        analysis_interval: 1
+        canary_analysis_duration: 10
+        pass_on_critical_failure: false
+        query_json: {}
+        # deployment_type: CANARY
+        task_type: CANARY_ANALYSIS
+        services:
+
+            - DEMO-SERVICE
+
+            - LOGGING-SERVICE
+
+        canary_analysis_template: 1
+        application_env: impl-dev
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+  # Canary Deployment 40%
+  - questionnaires: []
+    name: Deployment 40% Canary
+    approval: false
+    send_mail: false
+    approve_user: []
+    order: 11
+    jira_issue_reference: null
+    snow_issue_reference: null
+    continue_on_disapproval: false
+    approval_questions: false
+    tasks:
+      - name: job_1
+        order: 1
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields: []
+        deployment_status_check: false
+        deployment_type: CANARY
+        tag: generated
+        task_type: DEPLOY
+        pod_shift_percentage: 40
+        services:
+
+            - DEMO-SERVICE
+
+            - LOGGING-SERVICE
+
+        application_env: impl-dev
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+        artifact_source: GENERATED
+      - name: job_2
+        order: 2
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields: []
+        deployment_status_check: false
+        deployment_type: CANARY
+        tag: generated
+        task_type: DEPLOY
+        pod_shift_percentage: 40
+        services:
+
+            - DEMO-SERVICE
+
+            - LOGGING-SERVICE
+
+        application_env: impl-dev
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+        artifact_source: GENERATED
+      - name: job_3
+        order: 3
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields: []
+        warmup_delay_duration: 1
+        analysis_interval: 1
+        canary_analysis_duration: 10
+        pass_on_critical_failure: false
+        query_json: {}
+        # deployment_type: CANARY
+        task_type: CANARY_ANALYSIS
+        services:
+
+            - DEMO-SERVICE
+
+            - LOGGING-SERVICE
+
+        canary_analysis_template: 1
+        application_env: impl-dev
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+  # Canary Deployment 60%
+  - questionnaires: []
+    name: Deployment 60% Canary
+    approval: false
+    send_mail: false
+    approve_user: []
+    order: 12
+    jira_issue_reference: null
+    snow_issue_reference: null
+    continue_on_disapproval: false
+    approval_questions: false
+    tasks:
+      - name: job_1
+        order: 1
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields: []
+        deployment_status_check: false
+        deployment_type: CANARY
+        tag: generated
+        task_type: DEPLOY
+        pod_shift_percentage: 60
+        services:
+
+            - DEMO-SERVICE
+
+            - LOGGING-SERVICE
+
+        application_env: impl-dev
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+        artifact_source: GENERATED
+      - name: job_2
+        order: 2
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields: []
+        deployment_status_check: false
+        deployment_type: CANARY
+        tag: generated
+        task_type: DEPLOY
+        pod_shift_percentage: 60
+        services:
+
+            - DEMO-SERVICE
+
+            - LOGGING-SERVICE
+
+        application_env: impl-dev
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+        artifact_source: GENERATED
+      - name: job_3
+        order: 3
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields: []
+        warmup_delay_duration: 1
+        analysis_interval: 1
+        canary_analysis_duration: 10
+        pass_on_critical_failure: false
+        query_json: {}
+        # deployment_type: CANARY
+        task_type: CANARY_ANALYSIS
+        services:
+
+            - DEMO-SERVICE
+
+            - LOGGING-SERVICE
+
+        canary_analysis_template: 1
+        application_env: impl-dev
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+  # Canary Deployment 100%
+  - questionnaires: []
+    name: Deployment 100% Canary
+    approval: false
+    send_mail: false
+    approve_user: []
+    order: 13
+    jira_issue_reference: null
+    snow_issue_reference: null
+    continue_on_disapproval: false
+    approval_questions: false
+    tasks:
+      - name: job_1
+        order: 1
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields: []
+        deployment_status_check: false
+        deployment_type: CANARY
+        tag: generated
+        task_type: DEPLOY
+        pod_shift_percentage: 100
+        services:
+
+            - DEMO-SERVICE
+
+            - LOGGING-SERVICE
+
+        application_env: impl-dev
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+        artifact_source: GENERATED
+      - name: job_2
+        order: 2
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields: []
+        deployment_status_check: false
+        deployment_type: CANARY
+        tag: generated
+        task_type: DEPLOY
+        pod_shift_percentage: 100
+        services:
+
+            - DEMO-SERVICE
+
+            - LOGGING-SERVICE
+
+        application_env: impl-dev
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+        artifact_source: GENERATED
+      - name: job_3
+        order: 3
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields: []
+        warmup_delay_duration: 1
+        analysis_interval: 1
+        canary_analysis_duration: 10
+        pass_on_critical_failure: false
+        query_json: {}
+        # deployment_type: CANARY
+        task_type: CANARY_ANALYSIS
+        services:
+
+            - DEMO-SERVICE
+
+            - LOGGING-SERVICE
+
+        canary_analysis_template: 1
+        application_env: impl-dev
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+  # SNOW Ticket Transition Stage Start
+  - questionnaires: []
+    name: Review-SNOW-Ticket
+    approval: false
+    send_mail: false
+    approve_user: []
+    order: 14
+    stage_run_condition:
+      stage.Deployment.job.job_1.success: 'true'
+    jira_issue_reference: null
+    snow_issue_reference: null
+    continue_on_disapproval: false
+    approval_questions: false
+    tasks:
+      # SNOW Ticket Transition Stage Job 1
+      - name: job_1
+        order: 1
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition: null
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields:
+          issue_key:
+            value: >-
+              stage.Create-SNOW-Ticket.task.1.SNOW_INTEGRATION.snow_issue_key.step_order.0
+            source: job_out_put_vars
+        snow_operation: snow_update_status
+        snow_description: null
+        short_description: null
+        snow_ticket_type: null
+        service: null
+        category: null
+        configuration_items: null
+        implementation_plan: null
+        justification: null
+        risk_impact_analysis: null
+        backout_plan: null
+        test_plan: null
+        start_date: null
+        end_date: null
+        impact: null
+        risk: null
+        snow_priority: null
+        change_state: '0'
+        issue_key: null
+        work_note: null
+        assignment_groups: null
+        application_job_template: Pipeline-generator-testing-app-v2
+        task_type: SNOW_INTEGRATION
+        docker_cache: true
+        artifact_source: TAG
+        # SNOW Ticket Transition Stage End
+  # SNOW Ticket Close Stage Start
+  - questionnaires: []
+    name: Close-SNOW-Ticket
+    approval: false
+    send_mail: false
+    approve_user: []
+    order: 15
+    stage_run_condition: {}
+    jira_issue_reference: null
+    snow_issue_reference: null
+    continue_on_disapproval: false
+    approval_questions: false
+    tasks:
+      # SNOW Ticket Close Stage Job 1
+      - name: job_1
+        order: 1
+        job_code: null
+        on_failure_exit: false
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition:
+          stage.Deployment 100% Canary.job.job_3.success: true
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields:
+          issue_key:
+            value: >-
+              stage.Create-SNOW-Ticket.task.1.SNOW_INTEGRATION.snow_issue_key.step_order.0
+            source: job_out_put_vars
+        snow_operation: snow_update_status
+        snow_description: null
+        short_description: null
+        snow_ticket_type: null
+        service: null
+        category: null
+        configuration_items: null
+        implementation_plan: null
+        justification: null
+        risk_impact_analysis: null
+        backout_plan: null
+        test_plan: null
+        start_date: null
+        end_date: null
+        impact: null
+        risk: null
+        snow_priority: null
+        change_state: '3'
+        issue_key: null
+        work_note: null
+        assignment_groups: null
+        task_type: SNOW_INTEGRATION
+        components: []
+        docker_cache: true
+        application_job_template: Pipeline-generator-testing-app-v2
+        artifact_source: TAG
+      # SNOW Ticket Close Stage Job 2
+      - name: job_2
+        order: 2
+        job_code: null
+        on_failure_exit: false
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition:
+          stage.Deployment 100% Canary.job.job_3.success: false
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields:
+          issue_key:
+            value: >-
+              stage.Create-SNOW-Ticket.task.1.SNOW_INTEGRATION.snow_issue_key.step_order.0
+            source: job_out_put_vars
+        snow_operation: snow_update_status
+        snow_description: null
+        short_description: null
+        snow_ticket_type: null
+        service: null
+        category: null
+        configuration_items: null
+        implementation_plan: null
+        justification: null
+        risk_impact_analysis: null
+        backout_plan: null
+        test_plan: null
+        start_date: null
+        end_date: null
+        impact: null
+        risk: null
+        snow_priority: null
+        change_state: '4'
+        issue_key: null
+        work_note: null
+        assignment_groups: null
+        application_job_template: Pipeline-generator-testing-app-v2
+        task_type: SNOW_INTEGRATION
+        components: []
+        project_env: null
+        docker_cache: true
+        artifact_source: TAG
+  # JIRA Ticket Final Stage Start
+  - questionnaires: []
+    name: Final-JIRA-Ticket
+    approval: false
+    send_mail: false
+    approve_user: []
+    order: 16
+    stage_run_condition: {}
+    jira_issue_reference: null
+    snow_issue_reference: null
+    continue_on_disapproval: false
+    approval_questions: false
+    tasks:
+      # JIRA Ticket Final Stage Job 1
+      - name: job_1
+        order: 1
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition:
+          stage.Deployment 100% Canary.job.job_3.success: true
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields: {}
+        operation: status_update
+        summary: null
+        description: null
+        issuetype: null
+        priority: null
+        account_id: null
+        issue_key: >-
+          stage.Create-Jira-Ticket.job.job_2.jira_id.key.project.DEMO_PROJECT
+        status: DONE
+        comment: null
+        epic_name: null
+        issue_name: null
+        set_branch: false
+        additional_field_key_value: []
+        release_name: null
+        jira_status: []
+        selected_jira_users: []
+        comment_validator_type: null
+        comment_validator: null
+        already_comment_validator_type: null
+        already_comment_validator: null
+        jira_issue_list: []
+        already_picked: false
+        destination_branch: null
+        provider: null
+        release_issue_key: null
+        parent_jira_id: null
+        pick_stories_from: null
+        ticketing_project: null
+        release_ticket_flag: false
+        task_type: JIRA_INTEGRATION
+        components: []
+        project_env: null
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+        artifact_source: TAG
+      # JIRA Ticket Final Stage Job 2
+      - name: job_2
+        order: 2
+        job_code: null
+        on_failure_exit: true
+        on_success_exit: false
+        skip_task: false
+        mark_success_upon_skip: false
+        task_run_condition:
+          stage.Deployment 100% Canary.job.job_3.success: false
+        environment_variables: {}
+        is_input_variable_mapped: false
+        output_variable_mapping: null
+        template_version: null
+        dynamic_fields: {}
+        operation: status_update
+        summary: null
+        description: null
+        issuetype: null
+        priority: null
+        account_id: null
+        issue_key: >-
+          stage.Create-Jira-Ticket.job.job_2.jira_id.key.project.DEMO_PROJECT
+        status: CLOSED
+        comment: null
+        epic_name: null
+        issue_name: null
+        set_branch: false
+        additional_field_key_value: []
+        release_name: null
+        jira_status: []
+        selected_jira_users: []
+        comment_validator_type: null
+        comment_validator: null
+        already_comment_validator_type: null
+        already_comment_validator: null
+        jira_issue_list: []
+        already_picked: false
+        destination_branch: null
+        provider: null
+        release_issue_key: null
+        parent_jira_id: null
+        pick_stories_from: null
+        ticketing_project: null
+        release_ticket_flag: false
+        task_type: JIRA_INTEGRATION
+        components: []
+        project_env: null
+        application_job_template: Pipeline-generator-testing-app-v2
+        docker_cache: true
+        artifact_source: TAG
