@@ -500,7 +500,7 @@ spec:
       - question: Application
         type: text
         possible_value: null
-        default_value: buildpiper
+        default_value: 'buildpiper'
         jira_update: false
         snow_update: true
         job_template: null
@@ -519,7 +519,7 @@ spec:
           Project,OS,PATCH Activity,PRE-AUTHORIZED,SECURITY Vulnerability,Bug
           Fix,Issue,New Deployment,Project,Routine,Patching,Performance
           Tuning,Server Decommission
-        default_value: Application
+        default_value: 'Application'
         jira_update: false
         snow_update: true
         job_template: null
@@ -533,7 +533,7 @@ spec:
       - question: Function
         type: select
         possible_value: OPS,PROJECT,INFRA
-        default_value: Project
+        default_value: 'Project'
         jira_update: false
         snow_update: true
         job_template: null
@@ -561,7 +561,7 @@ spec:
       - question: Business Functionality and Risk
         type: select
         possible_value: Acquisition,Experience,Recharge,All,None of these
-        default_value: None of These
+        default_value: 'None of These'
         jira_update: false
         snow_update: true
         job_template: null
@@ -575,7 +575,7 @@ spec:
       - question: Database Required
         type: select
         possible_value: Yes,No
-        default_value: No
+        default_value: 'No'
         jira_update: false
         snow_update: true
         job_template: null
@@ -594,7 +594,7 @@ spec:
           Tech,Hoonartek,IBM-AMS,IBM-OPS,IBM-SARM,Kyndryl,NMS
           Works,Nxtra,Others,Sampark Solutions,Softenger,TCS,Telesonic,Torry
           Harris,V Link Info,Wipro
-        default_value: opstree
+        default_value: 'opstree'
         jira_update: false
         snow_update: true
         job_template: null
@@ -613,7 +613,7 @@ spec:
           Tech,Hoonartek,IBM-AMS,IBM-OPS,IBM-SARM,Kyndryl,NMS
           Works,Nxtra,Others,Sampark Solutions,Softenger,TCS,Telesonic,Torry
           Harris,V Link Info,Wipro
-        default_value: opstree
+        default_value: 'opstree'
         jira_update: false
         snow_update: true
         job_template: null
@@ -627,7 +627,7 @@ spec:
       - question: Change Owner (e.g. USER NAME(OLMID)
         type: text
         possible_value: null
-        default_value: a1fmhown
+        default_value: 'a1fmhown'
         jira_update: false
         snow_update: true
         job_template: null
@@ -641,7 +641,7 @@ spec:
       - question: DR Applicable
         type: select
         possible_value: Yes,No
-        default_value: No
+        default_value: 'No'
         jira_update: false
         snow_update: true
         job_template: null
@@ -655,7 +655,7 @@ spec:
       - question: Line of Business
         type: text
         possible_value: null
-        default_value: 
+        default_value: ''
         jira_update: false
         snow_update: true
         job_template: null
@@ -725,7 +725,7 @@ spec:
       - question: Downtime Required
         type: select
         possible_value: Yes,No
-        default_value: No
+        default_value: 'No'
         jira_update: false
         snow_update: true
         job_template: null
@@ -739,7 +739,7 @@ spec:
       - question: Downtime Remarks
         type: text
         possible_value: null
-        default_value: No downtime
+        default_value: 'No downtime'
         jira_update: false
         snow_update: true
         job_template: null
@@ -781,7 +781,7 @@ spec:
       - question: Implementation Plan
         type: text
         possible_value: null
-        default_value: attached
+        default_value: 'attached'
         jira_update: false
         snow_update: true
         job_template: null
@@ -795,7 +795,7 @@ spec:
       - question: Backout Plan
         type: text
         possible_value: null
-        default_value: attached
+        default_value: 'attached'
         jira_update: false
         snow_update: true
         job_template: null
@@ -809,7 +809,7 @@ spec:
       - question: Backout Plan
         type: text
         possible_value: null
-        default_value: attached
+        default_value: 'attached'
         jira_update: false
         snow_update: true
         job_template: null
@@ -823,7 +823,7 @@ spec:
       - question: Risk Impact Analysis
         type: text
         possible_value: null
-        default_value: attached
+        default_value: 'attached'
         jira_update: false
         snow_update: true
         job_template: null
@@ -837,7 +837,7 @@ spec:
       - question: Test Plan
         type: text
         possible_value: null
-        default_value: attached
+        default_value: 'attached'
         jira_update: false
         snow_update: true
         job_template: null
@@ -851,7 +851,7 @@ spec:
       - question: Justification
         type: text
         possible_value: null
-        default_value: attached
+        default_value: 'attached'
         jira_update: false
         snow_update: true
         job_template: null
@@ -865,7 +865,7 @@ spec:
       - question: Requested For Label (e.g. USER NAME(OLMID)
         type: text
         possible_value: null
-        default_value: 
+        default_value: ''
         jira_update: false
         snow_update: true
         job_template: null
