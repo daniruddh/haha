@@ -333,7 +333,7 @@ spec:
         skip_task: false
         mark_success_upon_skip: false
         task_run_condition:
-          stage.CI.job.job_1.success: 'true'
+          stage.CI.job.job_1.success: true
         environment_variables: {}
         is_input_variable_mapped: false
         output_variable_mapping: null
@@ -383,7 +383,7 @@ spec:
     approve_user: []
     order: 5
     stage_run_condition:
-      stage.CI.job.job_2.success: 'true'
+      stage.CI.job.job_2.success: true
     jira_issue_reference: null
     snow_issue_reference: null
     continue_on_disapproval: false
@@ -500,7 +500,7 @@ spec:
       - question: Application
         type: text
         possible_value: null
-        default_value: 'buildpiper'
+        default_value: buildpiper
         jira_update: false
         snow_update: true
         job_template: null
@@ -519,7 +519,7 @@ spec:
           Project,OS,PATCH Activity,PRE-AUTHORIZED,SECURITY Vulnerability,Bug
           Fix,Issue,New Deployment,Project,Routine,Patching,Performance
           Tuning,Server Decommission
-        default_value: 'Application'
+        default_value: Application
         jira_update: false
         snow_update: true
         job_template: null
@@ -532,8 +532,8 @@ spec:
         is_pipeline_context_field: false
       - question: Function
         type: select
-        possible_value: 'OPS,PROJECT,INFRA'
-        default_value: 'Project'
+        possible_value: OPS,PROJECT,INFRA
+        default_value: Project
         jira_update: false
         snow_update: true
         job_template: null
@@ -546,7 +546,7 @@ spec:
         is_pipeline_context_field: false
       - question: High Availability
         type: select
-        possible_value: 'Yes,No'
+        possible_value: Yes,No
         default_value: null
         jira_update: false
         snow_update: true
@@ -560,8 +560,8 @@ spec:
         is_pipeline_context_field: false
       - question: Business Functionality and Risk
         type: select
-        possible_value: 'Acquisition,Experience,Recharge,All,None of these'
-        default_value: 'None of These'
+        possible_value: Acquisition,Experience,Recharge,All,None of these
+        default_value: None of These
         jira_update: false
         snow_update: true
         job_template: null
@@ -574,8 +574,8 @@ spec:
         is_pipeline_context_field: false
       - question: Database Required
         type: select
-        possible_value: 'Yes,No'
-        default_value: 'No'
+        possible_value: Yes,No
+        default_value: No
         jira_update: false
         snow_update: true
         job_template: null
@@ -594,7 +594,7 @@ spec:
           Tech,Hoonartek,IBM-AMS,IBM-OPS,IBM-SARM,Kyndryl,NMS
           Works,Nxtra,Others,Sampark Solutions,Softenger,TCS,Telesonic,Torry
           Harris,V Link Info,Wipro
-        default_value: 'opstree'
+        default_value: opstree
         jira_update: false
         snow_update: true
         job_template: null
@@ -613,7 +613,7 @@ spec:
           Tech,Hoonartek,IBM-AMS,IBM-OPS,IBM-SARM,Kyndryl,NMS
           Works,Nxtra,Others,Sampark Solutions,Softenger,TCS,Telesonic,Torry
           Harris,V Link Info,Wipro
-        default_value: 'opstree'
+        default_value: opstree
         jira_update: false
         snow_update: true
         job_template: null
@@ -627,7 +627,7 @@ spec:
       - question: Change Owner (e.g. USER NAME(OLMID)
         type: text
         possible_value: null
-        default_value: 'a1fmhown'
+        default_value: a1fmhown
         jira_update: false
         snow_update: true
         job_template: null
@@ -640,8 +640,8 @@ spec:
         is_pipeline_context_field: false
       - question: DR Applicable
         type: select
-        possible_value: 'Yes,No'
-        default_value: 'No'
+        possible_value: Yes,No
+        default_value: No
         jira_update: false
         snow_update: true
         job_template: null
@@ -655,7 +655,7 @@ spec:
       - question: Line of Business
         type: text
         possible_value: null
-        default_value: ''
+        default_value: 
         jira_update: false
         snow_update: true
         job_template: null
@@ -724,8 +724,8 @@ spec:
         is_pipeline_context_field: false
       - question: Downtime Required
         type: select
-        possible_value: 'Yes,No'
-        default_value: 'No'
+        possible_value: Yes,No
+        default_value: No
         jira_update: false
         snow_update: true
         job_template: null
@@ -739,7 +739,7 @@ spec:
       - question: Downtime Remarks
         type: text
         possible_value: null
-        default_value: 'No downtime'
+        default_value: No downtime
         jira_update: false
         snow_update: true
         job_template: null
@@ -781,7 +781,7 @@ spec:
       - question: Implementation Plan
         type: text
         possible_value: null
-        default_value: 'attached'
+        default_value: attached
         jira_update: false
         snow_update: true
         job_template: null
@@ -795,7 +795,7 @@ spec:
       - question: Backout Plan
         type: text
         possible_value: null
-        default_value: 'attached'
+        default_value: attached
         jira_update: false
         snow_update: true
         job_template: null
@@ -809,7 +809,7 @@ spec:
       - question: Backout Plan
         type: text
         possible_value: null
-        default_value: 'attached'
+        default_value: attached
         jira_update: false
         snow_update: true
         job_template: null
@@ -823,7 +823,7 @@ spec:
       - question: Risk Impact Analysis
         type: text
         possible_value: null
-        default_value: 'attached'
+        default_value: attached
         jira_update: false
         snow_update: true
         job_template: null
@@ -837,7 +837,7 @@ spec:
       - question: Test Plan
         type: text
         possible_value: null
-        default_value: 'attached'
+        default_value: attached
         jira_update: false
         snow_update: true
         job_template: null
@@ -851,7 +851,7 @@ spec:
       - question: Justification
         type: text
         possible_value: null
-        default_value: 'attached'
+        default_value: attached
         jira_update: false
         snow_update: true
         job_template: null
@@ -865,7 +865,7 @@ spec:
       - question: Requested For Label (e.g. USER NAME(OLMID)
         type: text
         possible_value: null
-        default_value: ''
+        default_value: 
         jira_update: false
         snow_update: true
         job_template: null
@@ -925,9 +925,9 @@ spec:
         test_plan: null
         start_date: null
         end_date: null
-        impact: '2'
-        risk: '2'
-        snow_priority: '3'
+        impact: 2
+        risk: 2
+        snow_priority: 3
         change_state: null
         issue_key: null
         work_note: null
@@ -987,7 +987,7 @@ spec:
         impact: null
         risk: null
         snow_priority: null
-        change_state: '-3'
+        change_state: -3
         issue_key: null
         work_note: null
         assignment_groups: null
@@ -1046,7 +1046,7 @@ spec:
         impact: null
         risk: null
         snow_priority: null
-        change_state: '-2'
+        change_state: -2
         issue_key: null
         work_note: null
         assignment_groups: null
@@ -1104,7 +1104,7 @@ spec:
         impact: null
         risk: null
         snow_priority: null
-        change_state: '-1'
+        change_state: -1
         issue_key: null
         work_note: null
         assignment_groups: null
@@ -1123,7 +1123,7 @@ spec:
     approve_user: []
     order: 10
     stage_run_condition:
-      stage.Implement-SNOW-Ticket.job.job_1.success: 'true'
+      stage.Implement-SNOW-Ticket.job.job_1.success: true
     jira_issue_reference: null
     snow_issue_reference: null
     continue_on_disapproval: false
@@ -1166,7 +1166,7 @@ spec:
     approve_user: []
     order: 11
     stage_run_condition:
-      stage.Deployment.job.job_1.success: 'true'
+      stage.Deployment.job.job_1.success: true
     jira_issue_reference: null
     snow_issue_reference: null
     continue_on_disapproval: false
@@ -1207,7 +1207,7 @@ spec:
         impact: null
         risk: null
         snow_priority: null
-        change_state: '0'
+        change_state: 0
         issue_key: null
         work_note: null
         assignment_groups: null
@@ -1265,7 +1265,7 @@ spec:
         impact: null
         risk: null
         snow_priority: null
-        change_state: '3'
+        change_state: 3
         issue_key: null
         work_note: null
         assignment_groups: null
@@ -1310,7 +1310,7 @@ spec:
         impact: null
         risk: null
         snow_priority: null
-        change_state: '4'
+        change_state: 4
         issue_key: null
         work_note: null
         assignment_groups: null
