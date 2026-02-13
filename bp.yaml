@@ -333,7 +333,7 @@ spec:
         skip_task: false
         mark_success_upon_skip: false
         task_run_condition:
-          stage.CI.job.job_1.success: true
+          stage.CI.job.job_1.success: "true"
         environment_variables: {}
         is_input_variable_mapped: false
         output_variable_mapping: null
@@ -383,7 +383,7 @@ spec:
     approve_user: []
     order: 5
     stage_run_condition:
-      stage.CI.job.job_2.success: true
+      stage.CI.job.job_2.success: "true"
     jira_issue_reference: null
     snow_issue_reference: null
     continue_on_disapproval: false
