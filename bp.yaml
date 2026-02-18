@@ -1120,8 +1120,7 @@ spec:
     send_mail: false
     approve_user: []
     order: 10
-    stage_run_condition:
-      stage.Implement-SNOW-Ticket.job.job_1.success: true
+    stage_run_condition: stage.Implement-SNOW-Ticket.job.job_1.success
     jira_issue_reference: null
     snow_issue_reference: null
     continue_on_disapproval: false
@@ -1163,8 +1162,7 @@ spec:
     send_mail: false
     approve_user: []
     order: 11
-    stage_run_condition:
-      stage.Deployment.job.job_1.success: true
+    stage_run_condition: stage.Deployment.job.job_1.success
     jira_issue_reference: null
     snow_issue_reference: null
     continue_on_disapproval: false
@@ -1235,8 +1233,7 @@ spec:
         on_success_exit: false
         skip_task: false
         mark_success_upon_skip: false
-        task_run_condition:
-          stage.Deployment 100% Canary.job.job_3.success: true
+        task_run_condition: stage.Deployment 100% Canary.job.job_3.success
         environment_variables: {}
         is_input_variable_mapped: false
         output_variable_mapping: null
@@ -1280,8 +1277,7 @@ spec:
         on_success_exit: false
         skip_task: false
         mark_success_upon_skip: false
-        task_run_condition:
-          stage.Deployment 100% Canary.job.job_3.success: false
+        task_run_condition: stage.Deployment 100% Canary.job.job_3.success
         environment_variables: {}
         is_input_variable_mapped: false
         output_variable_mapping: null
@@ -1339,8 +1335,7 @@ spec:
         on_success_exit: false
         skip_task: false
         mark_success_upon_skip: false
-        task_run_condition:
-          stage.Deployment 100% Canary.job.job_3.success: true
+        task_run_condition: stage.Deployment 100% Canary.job.job_3.success
         environment_variables: {}
         is_input_variable_mapped: false
         output_variable_mapping: null
@@ -1390,8 +1385,7 @@ spec:
         on_success_exit: false
         skip_task: false
         mark_success_upon_skip: false
-        task_run_condition:
-          stage.Deployment 100% Canary.job.job_3.success: false
+        task_run_condition: stage.Deployment 100% Canary.job.job_3.success
         environment_variables: {}
         is_input_variable_mapped: false
         output_variable_mapping: null
